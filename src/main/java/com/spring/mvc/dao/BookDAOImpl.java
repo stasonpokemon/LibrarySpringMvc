@@ -1,6 +1,7 @@
 package com.spring.mvc.dao;
 
 import com.spring.mvc.entity.Book;
+import com.spring.mvc.entity.Person;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -43,5 +44,15 @@ public class BookDAOImpl implements BookDAO {
     @Override
     public List<Book> findAllByPersonId(Long id) {
         return jdbcTemplate.query("SELECT * FROM books WHERE person_id = ?", new Object[]{id}, new BeanPropertyRowMapper<>(Book.class));
+    }
+
+    @Override
+    public void release(Long id) {
+        jdbcTemplate.update("UPDATE books SET person_id = NULL WHERE id = ?", id);
+    }
+
+    @Override
+    public void assign(Long id, Person person) {
+        jdbcTemplate.update("UPDATE books SET person_id = ? WHERE id = ?", person.getId(), id);
     }
 }

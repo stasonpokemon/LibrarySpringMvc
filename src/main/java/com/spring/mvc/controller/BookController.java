@@ -84,22 +84,24 @@ public class BookController {
         return "redirect:/books/" + id;
     }
 
-    @PatchMapping("/{id}/assign-person")
+    @PatchMapping("/{id}/assign")
     public String assignBookToPerson(@PathVariable("id") Long id,
                                      @ModelAttribute("person") Person person) {
-        Book book = bookDAO.findById(id);
-        book.setPersonId(person.getId());
-        bookDAO.update(id, book);
+        bookDAO.assign(id, person);
         return "redirect:/books/" + id;
     }
 
-    @PatchMapping("/{id}/remove-person")
+    @PatchMapping("/{id}/release")
     public String removeBookFromPerson(@PathVariable("id") Long id,
                                        @ModelAttribute("person") Person person) {
-        Book book = bookDAO.findById(id);
-        book.setPersonId(null);
-        bookDAO.update(id, book);
+        bookDAO.release(id);
         return "redirect:/books/" + id;
+    }
+
+    @DeleteMapping("/{id}")
+    public String deleteBook(@PathVariable("id") Long id){
+        bookDAO.delete(id);
+        return "redirect:/books";
     }
 
 
