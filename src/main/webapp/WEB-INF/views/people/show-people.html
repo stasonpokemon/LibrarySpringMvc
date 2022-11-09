@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Show people</title>
+</head>
+<body>
+<div th:each="person : ${people}">
+    <a th:href="@{/people/{id}(id = ${person.getId()})}"
+       th:text="${person.getFullName()} + ', ' + ${person.getYearOfBirthday()}">person</a>
+</div>
+<!--<a style="color: chocolate" href="/people/new">Add new person</a>-->
+<button style="color: chocolate" type="button" th:onclick="window.location='/people/new'">Add new person</button>
+</body>
+</html>
