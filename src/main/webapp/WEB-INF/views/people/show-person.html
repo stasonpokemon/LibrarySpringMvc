@@ -11,7 +11,7 @@
 <div th:unless="${#lists.isEmpty(books)}">
     Books:
     <div th:each="book : ${books}">
-        <a th:href="@{/books/{id}(id = ${book.getId()})}"
+        <a th:style="${book.isOverdue}?'color: red': 'color: black'" th:href="@{/books/{id}(id = ${book.getId()})}"
            th:text="${book.getName() + ', ' + book.getAuthor() + ', ' + book.getReleaseYear()}">book</a>
     </div>
 </div>

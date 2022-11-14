@@ -1,7 +1,7 @@
 package com.spring.mvc.util;
 
-import com.spring.mvc.dao.PersonDAO;
 import com.spring.mvc.entity.Person;
+import com.spring.mvc.service.PersonService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
@@ -13,7 +13,7 @@ import java.util.Calendar;
 public class PersonValidator implements Validator {
 
     @Autowired
-    private PersonDAO personDAO;
+    private PersonService personService;
 
     @Override
     public boolean supports(Class<?> clazz) {
@@ -23,7 +23,7 @@ public class PersonValidator implements Validator {
     @Override
     public void validate(Object target, Errors errors) {
         Person person = (Person) target;
-        if (personDAO.findByFullName(person.getFullName()).isPresent()) {
+        if (personService.findByFullName(person.getFullName()).isPresent()) {
             errors.rejectValue("fullName", "", "The person with the given name exist");
         }
         int currentYear = Calendar.getInstance().get(Calendar.YEAR);
